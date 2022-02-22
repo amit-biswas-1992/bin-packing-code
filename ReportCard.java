@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ReportCard {
-    private int upperLimit = 10_000;
+    private int upperLimit = 1000000;
 
     public void generateReport() {
 
