@@ -31,11 +31,13 @@ public class BestFit {
 
             }
             if (best <= binCapacity) {
+
                 binArray[best_bucket] += item;
                 // inserted = true;
-                break;
+         
             }
-            else{ // enter only if new bin needed
+            else { // enter only if new bin needed
+
                 binArray[k] += item;
                 binCount++; // startying another fresh bin
             }
