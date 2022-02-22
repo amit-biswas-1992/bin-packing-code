@@ -16,6 +16,10 @@ public class FirstFit {
 
     public int packItems() {
         long start = System.nanoTime();
+<<<<<<< HEAD
+=======
+        // long start = System.currentTimeMillis();
+>>>>>>> cae08c024b5018d436a820a01643e18c2c818c06
         for (int item : items) {
             int k;
             // boolean inserted = false;
@@ -34,6 +38,10 @@ public class FirstFit {
             }
         }
         long end = System.nanoTime();
+<<<<<<< HEAD
+=======
+        // long end = System.currentTimeMillis();
+>>>>>>> cae08c024b5018d436a820a01643e18c2c818c06
         duration = end - start;
         return binCount;
     }
