@@ -19,7 +19,7 @@ public class BestFit {
         long start = System.currentTimeMillis();
         for (int item : items) {
             int k;
-            int best=binCapacity;   // the best supposed to be minimum
+            int best=binCapacity+1;   // the best supposed to be minimum
             int best_bucket=0;
             // boolean inserted = false;
             for (k = 0; k < binCount; k++) {
@@ -31,14 +31,14 @@ public class BestFit {
                 }
 
             }
-            if (item == best) {
-                binArray[k] += item;
+            if (best < binCapacity) {
+                binArray[best_bucket] += item;
                 // inserted = true;
-                break;
+         
             }
 
 
-            if( k == binCount) { // enter only if new bin needed
+            else { // enter only if new bin needed
                 binArray[k] += item;
                 binCount++; // startying another fresh bin
             }
