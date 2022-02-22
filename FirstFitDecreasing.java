@@ -16,9 +16,8 @@ public class FirstFitDecreasing {
 
     public int packItems() {
         long start = System.nanoTime();
-        // long start = System.currentTimeMillis();
 
-        items = Utility.sortReverse(items);
+        items = CountingSort.countSortDescending(items);
         
         for (int item : items) {
             int k;
@@ -43,24 +42,11 @@ public class FirstFitDecreasing {
         return binCount;
     }
 
-    public void printResult() {
-        System.out.println("[ Algorithm: First Fit Decreasing ]");
-        System.out.printf("Bin Capacity = %d\n", binCapacity);
-        System.out.printf("Required Bins = %d\n", binCount);
-        System.out.printf("Execution Time = %d ns\n", duration);
-        // System.out.printf("Execution Time = %d ms\n", duration);
-        System.out.println();
+    public String getNumBins() {
+        return String.valueOf(binCount);
     }
 
-    public List<String> getResult() {
-        String capacity = String.valueOf(binCapacity);
-        String itemCount = String.valueOf(items.length);
-        String requiredBins = String.valueOf(binCount);
-        String executingTime = String.valueOf(duration);
-
-        // String[] info = {capacity, itemCount, requiredBins, executingTime};
-
-        // return List.of(requiredBins, executingTime);
-        return List.of(capacity, itemCount, requiredBins, executingTime);
+    public String getDuration() {
+        return  String.valueOf(duration);
     }
 }

@@ -49,21 +49,14 @@ public class Utility {
     }
 
     // method for exporting to csv
-    public static void exportToCSV(List<List<String>> info, List<String> header, String fileName) {
+    public static void exportToCSV(List<List<String>> info,  String fileName) {
         
         String LINE_SEP = "\n";
         String COMMA_DELIM = ",";
         File csvFile = new File(fileName);
 
         try (FileWriter fileWriter = new FileWriter(csvFile)) {
-            // writing header
-            for (int i = 0; i < header.size(); i++) {
-                fileWriter.write(header.get(i));
-                if (i < header.size() - 1) {
-                    fileWriter.write(COMMA_DELIM);
-                }
-            }
-            fileWriter.write(LINE_SEP);
+            
              
             // writing body
             for (int i = 0; i < info.size(); i++) {
