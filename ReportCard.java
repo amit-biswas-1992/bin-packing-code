@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ReportCard {
-    private int upperLimit = 10000;
+    private int upperLimit = 100000;
 
     public void generateReport() {
 
@@ -16,7 +16,7 @@ public class ReportCard {
 
         int binCapacity = 10;
 
-        for(int itemCount = 10; itemCount <= upperLimit; itemCount = itemCount * 10) {
+        for(int itemCount = 10; itemCount <= upperLimit; itemCount = itemCount + 1000) {
 
                 int[] itemArray = Utility.getRandomArray(itemCount, binCapacity);
 
