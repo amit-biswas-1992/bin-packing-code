@@ -33,7 +33,7 @@ public class BestFit {
             if (best <= binCapacity) {
                 binArray[best_bucket] += item;
                 // inserted = true;
-                break;
+             //   break;
             }
             else{ // enter only if new bin needed
                 binArray[k] += item;
