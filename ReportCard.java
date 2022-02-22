@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ReportCard {
@@ -6,55 +7,76 @@ public class ReportCard {
 
     public void generateReport() {
 
-        List<String> fileHeader = List.of("Bin Capacity", "Total Items", "Bins Required", "Execution Time");
 
-        List<List<String>> firstFitInfo = new ArrayList<>();
-        List<List<String>> firstFitDecreasingInfo = new ArrayList<>();
-        List<List<String>> nextFitInfo = new ArrayList<>();
+        List<List<String>> executionTimeInfos = new ArrayList<>();
+        List<List<String>> requiredBinInfos = new ArrayList<>();
 
-        String firstFitfileName = "FF_Report.csv";
-        String firstFitDecreasingfileName = "FFD_Report.csv";
-        String nextFitfileName = "NF_Report.csv";
+        String executionTimeFile = "ExecutionTimeReport.csv";
+        String requiredBinFileName = "RequiredBinReport.csv";
 
-        // List<String> finalheader = List.of("Bin Capacity", "Total Items", "Bins Required (FF)", "Execution Time(FF)", "Bins Required (FFD)", "Execution Time(FFD)", "Bins Required (NF)", "Execution Time(NF)");
-        // List<String> finalResult = new ArrayList<>();
-        // List<List<String>> finalInfo = new ArrayList<>();
-        // String finalFileName = "FINAL_Report.csv";
+        int binCapacity = 10;
 
-        for (int binCapacity = 10; binCapacity <= 100; binCapacity += 10) {
-            for(int itemCount = 10; itemCount <= upperLimit; itemCount = itemCount * 10) {
+        for(int itemCount = 10; itemCount <= upperLimit; itemCount = itemCount * 10) {
 
                 int[] itemArray = Utility.getRandomArray(itemCount, binCapacity);
 
-                int[] firstFitCopy = Utility.getArrayCopy(itemArray);
-                int[] firstFitDecreasingCopy = Utility.getArrayCopy(itemArray);
-                int[] nextFitCopy = Utility.getArrayCopy(itemArray);
+            
 
+                //first fit section
+                int[] firstFitCopy = Utility.getArrayCopy(itemArray);
                 FirstFit firstFit = new FirstFit(firstFitCopy, binCapacity);
                 firstFit.packItems();
-                firstFitInfo.add(firstFit.getResult());
-
+                
+                //first fit decreasing section
+                int[] firstFitDecreasingCopy = Utility.getArrayCopy(itemArray);
                 FirstFitDecreasing firstFitDecreasing = new FirstFitDecreasing(firstFitDecreasingCopy, binCapacity);
                 firstFitDecreasing.packItems();
-                firstFitDecreasingInfo.add(firstFitDecreasing.getResult());
 
-                NextFit2 nextFit = new NextFit2(nextFitCopy, binCapacity);
-                nextFit.packItems();
-                nextFitInfo.add(nextFit.getResult());
+                //next fit section
+                int[] nextFitCopy = Utility.getArrayCopy(itemArray);
+                NextFit nextFit = new NextFit(binCapacity, nextFitCopy);
+                nextFit.insertAllItems(nextFitCopy);
 
-                // finalResult.add(String.valueOf(binCapacity));
-                // finalResult.add(String.valueOf(itemCount));
-                // finalResult.addAll(firstFit.getResult());
-                // finalResult.addAll(firstFitDecreasing.getResult());
-                // finalResult.addAll(nextFit.getResult());
-                // finalInfo.add(finalResult);
+                //next fit decreasing section
+                int[] nextFitDecreasingCopy = Utility.getArrayCopy(itemArray);
+                NextFitDecreasing nextFitDecreasing = new NextFitDecreasing(binCapacity, nextFitDecreasingCopy);
+                nextFitDecreasing.insertAllItems(nextFitDecreasingCopy);
+
+                //best fit section
+                int[] bestFitCopy = Utility.getArrayCopy(itemArray);
+                BestFit bestFit = new BestFit(bestFitCopy, binCapacity);
+                bestFit.packItems();
+
+                //worst fit  section
+                int[] worstFitCopy = Utility.getArrayCopy(itemArray);
+                WorstFit worstFit = new WorstFit(worstFitCopy, binCapacity);
+                worstFit.packItems();
+
+
+                //add to list
+                //List<String> executionInfo = List.of(String.valueOf(binCapacity), firstFit.getDuration(), firstFitDecreasing.getDuration(), nextFit.getDuration(), nextFitDecreasing.getDuration(), bestFit.getDuration(), worstFit.getDuration());
+                //executionTimeInfos.add(executionInfo );
+
+                //execution 
+                List<String> executionInfo = new ArrayList<>();
+                String[] values = {String.valueOf(itemCount), firstFit.getDuration(), firstFitDecreasing.getDuration(), nextFit.getDuration(), nextFitDecreasing.getDuration(), bestFit.getDuration(), worstFit.getDuration()};
+
+                executionInfo.addAll(Arrays.asList(values));
+                executionTimeInfos.add(executionInfo);
+
+                //required bin
+                List<String> requiredBinInfo = new ArrayList<>();
+                String[] values2 =  {String.valueOf(itemCount), firstFit.getNumBins(), firstFitDecreasing.getNumBins(), nextFit.getNumBins(), nextFitDecreasing.getNumBins(), bestFit.getNumBins(), worstFit.getNumBins()};
+                requiredBinInfo.addAll(Arrays.asList(values2));
+                requiredBinInfos.add(requiredBinInfo );
+
+                
             }
-        }
-        Utility.exportToCSV(firstFitInfo, fileHeader, firstFitfileName);
-        Utility.exportToCSV(firstFitDecreasingInfo, fileHeader, firstFitDecreasingfileName);
-        Utility.exportToCSV(nextFitInfo, fileHeader, nextFitfileName);
+        
+        Utility.exportToCSV(executionTimeInfos, executionTimeFile);
+        Utility.exportToCSV(requiredBinInfos, requiredBinFileName);
+        
 
-        // Utility.exportToCSV(finalInfo, header, finalFileName);
     }
 
     public static void main(String[] args) {
