@@ -33,7 +33,7 @@ public class WorstFit {
             if (worst > 0) {
                 binArray[worst_bucket] += item;
                 // inserted = true;
-                break;
+              //  break;
             }
 
 
